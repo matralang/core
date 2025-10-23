@@ -17,5 +17,8 @@
   "repository": "https://github.com/butchi/matra-core",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "devDependencies": {
+    "peggy": "^5.0.6"
   }
 }

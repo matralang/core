@@ -1,17 +1,73 @@
 /**
  * @butchi/matra-core
  * Matra Language Core - Parser and Runtime
+ *
+ * Unified language for document, data, and code representation
  */
 
-import { parse } from './parser.mjs'
+import { parse } from "./parser.mjs"
+import { toHTML, toJSON, toTeX, toESTree, toCanvas } from "./render.mjs"
+import { MATRA_VERSION } from "./types.mjs"
 
-export { parse }
+export { parse } from "./parser.mjs"
+export { toHTML, toJSON, toTeX, toESTree, toCanvas } from "./render.mjs"
+export { MATRA_VERSION } from "./types.mjs"
+
+/**
+ * Compile Matra source code to HTML
+ * @param {string} source - Matra source code
+ * @param {Object} [opts] - Compilation options
+ * @param {boolean} [opts.minify] - Minify output
+ * @param {string} [opts.grammarSource] - Source name for error messages
+ * @returns {string} HTML string
+ */
+export function compile(source, opts = {}) {
+  const ast = parse(source, { grammarSource: opts.grammarSource })
+  return toHTML(ast, { minify: opts.minify })
+}
+
+/**
+ * 高水準API — Matra構文から任意出力へ
+ * Unified interface for parsing and rendering Matra source
+ * @param {string} input - Matra source code
+ * @param {Object} [options] - Processing options
+ * @param {string} [options.output='html'] - Output format: 'html', 'json', 'tex', 'estree', 'canvas'
+ * @param {boolean} [options.minify] - Minify output (for HTML)
+ * @param {string} [options.grammarSource] - Source name for error messages
+ * @returns {string|Object|Array} Rendered output in specified format
+ */
+export function matra(input, options = {}) {
+  const output = options.output ?? "html"
+  const ast = parse(input, { grammarSource: options.grammarSource })
+
+  switch (output) {
+    case "html":
+      return toHTML(ast, { minify: options.minify })
+    case "json":
+      return toJSON(ast, { pretty: !options.minify })
+    case "tex":
+      return toTeX(ast)
+    case "estree":
+      return toESTree(ast)
+    case "canvas":
+      return toCanvas(ast)
+    default:
+      throw new Error(`Unknown output format: ${output}`)
+  }
+}
 
 // Version info
-export const VERSION = '0.6.0'
+export const VERSION = MATRA_VERSION
 
 // Re-export for convenience
 export default {
   parse,
+  compile,
+  matra,
+  toHTML,
+  toJSON,
+  toTeX,
+  toESTree,
+  toCanvas,
   VERSION,
 }

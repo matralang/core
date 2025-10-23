@@ -10,6 +10,50 @@ import { evaluateSource } from "./evaluate.mjs"
  * @param {any} node
  * @returns {string}
  */
+/**
+ * Render HAST/MDAST-style node {type, tagName, properties, children}
+ * @param {Object} node
+ * @returns {string}
+ */
+function renderHastNode(node) {
+  // Text node
+  if (node.type === "text") {
+    return escapeHTML(node.value || "")
+  }
+
+  // Element node
+  if (node.type === "element") {
+    const tag = node.tagName || "div"
+    const attrs = Object.entries(node.properties || {})
+      .filter(([k, v]) => v != null)
+      .map(([k, v]) => {
+        if (typeof v === "boolean") return v ? ` ${k}` : ""
+        return ` ${k}="${escapeAttr(String(v))}"`
+      })
+      .join("")
+    
+    const voidElements = new Set([
+      "area", "base", "br", "col", "embed", "hr", "img", "input",
+      "link", "meta", "param", "source", "track", "wbr"
+    ])
+    
+    if (voidElements.has(tag)) {
+      return `<${tag}${attrs}>`
+    }
+
+    const children = (node.children || []).map(toHTML).join("")
+    return `<${tag}${attrs}>${children}</${tag}>`
+  }
+
+  // Root node (fragment)
+  if (node.type === "root") {
+    return (node.children || []).map(toHTML).join("")
+  }
+
+  // Unknown node type
+  return ""
+}
+
 export function toHTML(node) {
   if (node == null) return ""
 
@@ -21,6 +65,16 @@ export function toHTML(node) {
     }
     // Otherwise it's an array of nodes
     return node.map(toHTML).join("")
+  }
+
+    // Handle HAST/MDAST-style objects with type property
+  if (typeof node === "object" && node.type) {
+    return renderHastNode(node)
+  }
+
+    // Handle HAST/MDAST-style objects with type property
+  if (typeof node === "object" && node.type) {
+    return renderHastNode(node)
   }
 
   if (typeof node !== "object") return escapeHTML(String(node))

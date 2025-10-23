@@ -7,10 +7,12 @@
 
 import { parse } from "./parser.mjs"
 import { toHTML, toJSON, toTeX, toESTree, toCanvas } from "./render.mjs"
+import { transform } from "./transform.mjs"
 import { MATRA_VERSION } from "./types.mjs"
 
 export { parse } from "./parser.mjs"
 export { toHTML, toJSON, toTeX, toESTree, toCanvas } from "./render.mjs"
+export { transform } from "./transform.mjs"
 export { MATRA_VERSION } from "./types.mjs"
 
 /**
@@ -19,11 +21,25 @@ export { MATRA_VERSION } from "./types.mjs"
  * @param {Object} [opts] - Compilation options
  * @param {boolean} [opts.minify] - Minify output
  * @param {string} [opts.grammarSource] - Source name for error messages
+ * @param {Record<string, any>} [opts.context] - Template context for variable interpolation
  * @returns {string} HTML string
  */
 export function compile(source, opts = {}) {
-  const ast = parse(source, { grammarSource: opts.grammarSource })
+  let ast = parse(source, { grammarSource: opts.grammarSource })
+  if (opts.context) {
+    ast = transform(ast, opts.context)
+  }
   return toHTML(ast, { minify: opts.minify })
+}
+
+/**
+ * Template function with context
+ * Returns a function that compiles Matra source with given context
+ * @param {Record<string, any>} context - Template context
+ * @returns {Function} Template function
+ */
+export function with_(context) {
+  return (source) => compile(source, { context })
 }
 
 /**
@@ -34,11 +50,16 @@ export function compile(source, opts = {}) {
  * @param {string} [options.output='html'] - Output format: 'html', 'json', 'tex', 'estree', 'canvas'
  * @param {boolean} [options.minify] - Minify output (for HTML)
  * @param {string} [options.grammarSource] - Source name for error messages
+ * @param {Record<string, any>} [options.context] - Template context
  * @returns {string|Object|Array} Rendered output in specified format
  */
 export function matra(input, options = {}) {
   const output = options.output ?? "html"
-  const ast = parse(input, { grammarSource: options.grammarSource })
+  let ast = parse(input, { grammarSource: options.grammarSource })
+  
+  if (options.context) {
+    ast = transform(ast, options.context)
+  }
 
   switch (output) {
     case "html":
@@ -64,6 +85,8 @@ export default {
   parse,
   compile,
   matra,
+  with: with_,
+  transform,
   toHTML,
   toJSON,
   toTeX,

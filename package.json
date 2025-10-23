@@ -1,20 +1,17 @@
 {
   "name": "@butchi/matra-core",
   "description": "Matra core language runtime and parser",
-  "version": "0.6.0-dev",
+  "version": "0.6.0",
   "type": "module",
-  "main": "index.mjs",
+  "main": "src/index.mjs",
   "exports": {
-    ".": "./index.mjs"
+    ".": "./src/index.mjs"
   },
   "files": [
-    "index.mjs",
-    "parser.mjs",
-    "evaluate.mjs",
-    "render.mjs"
+    "src"
   ],
   "scripts": {
-    "build": "peggy --format es --output parser.mjs src/matra.pegjs"
+    "build": "peggy --format es --output src/parser.mjs src/matra.pegjs"
   },
   "license": "MIT",
   "repository": "https://github.com/butchi/matra-core",

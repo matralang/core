@@ -21,6 +21,11 @@ function renderHastNode(node) {
     return escapeHTML(node.value || "")
   }
 
+  // Comment node
+  if (node.type === "comment") {
+    return `<!--${node.value || ""}-->`
+  }
+
   // Element node
   if (node.type === "element") {
     const tag = node.tagName || "div"

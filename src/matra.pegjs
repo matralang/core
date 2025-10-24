@@ -106,6 +106,25 @@ TagBody
       children: body ?? [],
     }
   }
+  / _ tagName:Slug selectors:(ClassOrId)* setRuleArr:("[" @SetRule+ "]")? _ text:TildeText {
+    const syntaxMode = options.syntaxMode || 'mixed';
+    if (syntaxMode === 'application') {
+      error('Block syntax is not allowed in application mode');
+    }
+    const classList = selectors.filter(s => s.type === 'class').map(s => s.value);
+    const id = selectors.find(s => s.type === 'id')?.value;
+    return {
+      type: "element",
+      tagName,
+      properties: Object.assign(
+        {},
+        setRuleArr ? Object.fromEntries(setRuleArr) : {},
+        id ? { id } : {},
+        classList.length > 0 ? { class: classList.join(" ") } : {}
+      ),
+      children: [{ type: "text", value: text }],
+    }
+  }
   / _ tagName:Slug selectors:(ClassOrId)* setRuleArr:("[" @SetRule+ "]")? _ text:BacktickText {
     const syntaxMode = options.syntaxMode || 'mixed';
     if (syntaxMode === 'application') {
@@ -185,7 +204,7 @@ Template
   = Slug
 
 Slug
-  = str:[^\'\"\(\)\[\]\{\}\<\>\=\|\#\.\`\n]+ {
+  = str:[^\'\"\(\)\[\]\{\}\<\>\=\|\#\.\`\~\n]+ {
     return str.join("").trim()
   }
 
@@ -266,6 +285,11 @@ String
 
 BacktickText
   = "`" str:([^`]*) "`" {
+    return str.join("")
+  }
+
+TildeText
+  = "~" str:([^~]*) "~" {
     return str.join("")
   }
 

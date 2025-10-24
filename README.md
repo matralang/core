@@ -1,15 +1,15 @@
 # @butchi/matra-core
 
-[![Version](https://img.shields.io/badge/version-0.8.0-blue.svg)](https://github.com/butchi/matra-core)
+[![Version](https://img.shields.io/badge/version-0.8.1-blue.svg)](https://github.com/butchi/matra-core)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 **Matra** is a lightweight, expressive template language and engine for generating HTML, with support for conditional rendering, loops, and variable interpolation.
 
 ## ✨ Features
 
-- 🎨 **Three Syntax Styles** - Block, Function, and Backtick syntax - **NEW Backtick in v0.8!**
+- 🎨 **Four Syntax Styles** - Block, Function, Backtick, and Tilde syntax - **NEW Tilde in v0.8!**
 - 🔒 **Syntax Modes** - Enforce consistent syntax across your project - **NEW in v0.8!**
-- ✨ **Concise Syntax** - `h1\`Hello\``instead of`h1 { "Hello" }` - **NEW in v0.8!**
+- ✨ **Concise Text Syntax** - `h1\`Hello\``or`h1~Hello~`instead of`h1 { "Hello" }` - **NEW in v0.8!**
 - 🎯 **Simple & Expressive** - Choose the style that fits your needs
 - 🔀 **Conditional Rendering** - `m-if`, `m-else` directives (both tag and attribute styles)
 - 🔁 **Array Iteration** - `m-each` directive with scoped variables
@@ -20,7 +20,7 @@
 
 ## 🆕 New in v0.8: Multiple Syntax Styles
 
-Choose between **block syntax**, **function syntax**, or **backtick syntax**:
+Choose between **block syntax**, **function syntax**, **backtick syntax**, or **tilde syntax**:
 
 ```javascript
 // Block syntax with quotes (v0.7)
@@ -29,15 +29,18 @@ compile('div.container { h1 { "Hello" } }')
 // Backtick syntax - NEW & CONCISE! (v0.8)
 compile("div.container { h1`Hello` }")
 
+// Tilde syntax - ALTERNATIVE CONCISE SYNTAX! (v0.8)
+compile("div.container { h1~Hello~ }")
+
 // Function syntax (v0.8)
 compile('div({class:"container"}, h1("Hello"))')
 
 // All produce: <div class="container"><h1>Hello</h1></div>
 ```
 
-The **backtick syntax** provides the cleanest way to write simple text content!
+Both **backtick** and **tilde** syntax provide clean ways to write simple text content!
 
-See [Backtick Syntax Guide](./docs/backtick-syntax.md) | [Function Syntax Guide](./docs/function-syntax.md) | [Syntax Modes](./docs/syntax-modes.md) | [Quick Reference](./docs/QUICK-REFERENCE.md) | [Syntax Comparison](./docs/SYNTAX-COMPARISON.md)
+See [Backtick Syntax Guide](./docs/backtick-syntax.md) | [Tilde Syntax Guide](./docs/tilde-syntax.md) | [Function Syntax Guide](./docs/function-syntax.md) | [Syntax Modes](./docs/syntax-modes.md) | [Quick Reference](./docs/QUICK-REFERENCE.md) | [Syntax Comparison](./docs/SYNTAX-COMPARISON.md)
 
 ## 📦 Installation
 
@@ -63,6 +66,16 @@ console.log(html)
 import { compile } from "@butchi/matra-core"
 
 const html = compile("div.greeting { h1`Hello, World!` }")
+console.log(html)
+// Output: <div class="greeting"><h1>Hello, World!</h1></div>
+```
+
+### Basic Usage (Tilde Syntax) - ALTERNATIVE CONCISE SYNTAX in v0.8
+
+```javascript
+import { compile } from "@butchi/matra-core"
+
+const html = compile("div.greeting { h1~Hello, World!~ }")
 console.log(html)
 // Output: <div class="greeting"><h1>Hello, World!</h1></div>
 ```

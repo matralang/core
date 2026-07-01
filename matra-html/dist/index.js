@@ -9,7 +9,7 @@ export function toHTML(ast, options = {}) {
     return ast.map(child => renderChild(child, options)).join("");
 }
 function renderNode(node, options) {
-    const [tag, props, children] = node;
+    const { tag, props, children } = node;
     if (tag === (options.rootTag ?? "$root")) {
         return children.map(child => renderChild(child, options)).join("");
     }
@@ -54,13 +54,17 @@ function escapeAttribute(value) {
     return escapeHTML(value);
 }
 function isMatraAST(value) {
-    return (Array.isArray(value) &&
-        value.length === 3 &&
-        typeof value[0] === "string" &&
-        value[1] !== null &&
-        typeof value[1] === "object" &&
-        !Array.isArray(value[1]) &&
-        Array.isArray(value[2]));
+    return (value !== null &&
+        typeof value === "object" &&
+        !Array.isArray(value) &&
+        "tag" in value &&
+        typeof value.tag === "string" &&
+        "props" in value &&
+        value.props !== null &&
+        typeof value.props === "object" &&
+        !Array.isArray(value.props) &&
+        "children" in value &&
+        Array.isArray(value.children));
 }
 export default { toHTML };
 //# sourceMappingURL=index.js.map

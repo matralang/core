@@ -5,7 +5,7 @@ export function visit(node, visitor) {
 }
 function walk(node, parent, index, visitor) {
     visitor(node, { parent, index });
-    node[2].forEach((child, childIndex) => {
+    node.children.forEach((child, childIndex) => {
         if (isMatraAST(child))
             walk(child, node, childIndex, visitor);
     });
@@ -15,12 +15,12 @@ export function transform(node, transformer) {
     return transformNode(node, null, null, transformer);
 }
 function transformNode(node, parent, index, transformer) {
-    const children = node[2]
+    const children = node.children
         .map((child, childIndex) => isMatraAST(child)
         ? transformNode(child, node, childIndex, transformer)
         : child)
         .filter((child) => child !== null);
-    const next = [node[0], { ...node[1] }, children];
+    const next = { tag: node.tag, props: { ...node.props }, children };
     const result = transformer(next, { parent, index });
     return result === undefined ? next : result;
 }

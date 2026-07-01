@@ -4,24 +4,19 @@ export type MatraValue = MatraScalar | MatraValue[] | {
     [key: string]: MatraValue;
 };
 export type MatraProps = Record<string, MatraValue>;
-/**
- * Matra's compact internal representation.
- *
- * A tag is domain-neutral: it can name an HTML element, a mathematical
- * operator, a document construct, or a graphics primitive.
- */
-export type MatraAST = [
-    tag: string,
-    props: MatraProps,
-    children: MatraASTChild[]
-];
-export type MatraASTChild = MatraAST | MatraValue;
-/** Object-shaped interchange format used at parser and process boundaries. */
-export interface MatraJSON {
+/** Object-shaped tree used by Core visitors, transformers, and renderers. */
+export interface MatraAST {
     tag: string;
     props: MatraProps;
-    children: MatraJSONChild[];
+    children: MatraASTChild[];
 }
+export type MatraASTChild = MatraAST | MatraValue;
+/** Compact three-element representation used for parser interchange. */
+export type MatraJSON = [
+    tag: string,
+    props: MatraProps,
+    children: MatraJSONChild[]
+];
 export type MatraJSONChild = MatraJSON | MatraValue;
 export interface ParseOptions {
     grammarSource?: string;

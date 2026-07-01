@@ -1,15 +1,11 @@
-/**
- * Matra Core - Transform Module
- * Template evaluation: m-if, m-else, m-each, {{mustache}}
- */
-/**
- * Transform Matra AST with template context
- * @param {import('./types.js').MatraNode} ast
- * @param {Record<string, any>} context
- * @returns {import('./types.js').MatraNode}
- */
-export declare function transform(ast: any, context?: {}): any;
-declare const _default: {
-    transform: typeof transform;
-};
-export default _default;
+import type { MatraAST } from "./types.js";
+export interface VisitContext {
+    parent: MatraAST | null;
+    index: number | null;
+}
+export type Visitor = (node: MatraAST, context: VisitContext) => void;
+export type Transformer = (node: MatraAST, context: VisitContext) => MatraAST | null | undefined;
+/** Depth-first traversal of AST nodes. Literal children are left untouched. */
+export declare function visit(node: MatraAST, visitor: Visitor): void;
+/** Immutable bottom-up transformation. Returning null removes an AST child. */
+export declare function transform(node: MatraAST, transformer: Transformer): MatraAST | null;

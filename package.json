@@ -20,7 +20,7 @@
     "build:parser": "peggy --format es --output src/matra-parser.mjs src/matra-parser.pegjs",
     "build:types": "tsc",
     "check": "tsc --noEmit",
-    "test": "npm run build && node --test tests/core.test.mjs",
+    "test": "npm run build && node --test tests/core.test.mjs tests/render-with.test.mjs",
     "test:legacy": "npm run build && node --test tests/*.test.mjs",
     "prepack": "npm run build"
   },

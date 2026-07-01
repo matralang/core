@@ -6,7 +6,7 @@ Successfully implemented function-style syntax for Matra v0.8 while maintaining 
 
 ## Changes Made
 
-### 1. Grammar Extension (`src/matra.pegjs`)
+### 1. Grammar Extension (`src/matra-parser.pegjs`)
 
 Added the following rules to support function syntax:
 
@@ -222,8 +222,8 @@ Block
 
 ## Files Modified
 
-1. `src/matra.pegjs` - Grammar extension
-2. `src/parser.mjs` - Auto-generated from grammar
+1. `src/matra-parser.pegjs` - Grammar extension
+2. `src/matra-parser.mjs` - Auto-generated from grammar
 
 ## Files Created
 

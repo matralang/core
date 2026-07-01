@@ -66,8 +66,8 @@ Total: 60/60 passing ✅
 
 ### Modified
 
-- `src/matra.pegjs` - Added function syntax rules
-- `src/parser.mjs` - Regenerated from grammar
+- `src/matra-parser.pegjs` - Added function syntax rules
+- `src/matra-parser.mjs` - Regenerated from grammar
 - `CHANGELOG.md` - Documented v0.8 release
 
 ### Created

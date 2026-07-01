@@ -113,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial ESM module structure
-- Peggy parser integration (`parser.mjs` generated from `matra.pegjs`)
+- Peggy parser integration (`matra-parser.mjs` generated from `matra-parser.pegjs`)
 - Basic rendering: `toHTML()`, `toJSON()`
 - Type definitions (`types.mjs`)
 

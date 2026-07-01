@@ -53,8 +53,18 @@ HTML rendering is provided by the separate workspace package:
 import { parse } from "@butchi/matra-core"
 import { toHTML } from "@butchi/matra-html"
 
-toHTML(parse('p({class:"lead"}, "Hello")'))
+toHTML(parse('p("Hello", class="lead")'))
 ```
+
+Function-style syntax uses Python-like keyword arguments for props:
+
+```matra
+circle(x=10, y=20, r=5)
+```
+
+Ordinary positional arguments become children. The earlier
+`circle({x: 10, y: 20, r: 5})` form remains available for compatibility but
+is not the canonical notation.
 
 ## Documentation languages
 

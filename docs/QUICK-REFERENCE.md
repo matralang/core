@@ -9,11 +9,11 @@ p("Hello")                              → <p>Hello</p>
 div()                                   → <div></div>
 ```
 
-### With Properties (First Argument = Object)
+### With Properties (Python-style Keyword Arguments)
 
 ```matra
-h1({class:"title"}, "Text")            → <h1 class="title">Text</h1>
-img({src:"cat.png", alt:"Cat"})        → <img src="cat.png" alt="Cat">
+h1("Text", class="title")             → <h1 class="title">Text</h1>
+img(src="cat.png", alt="Cat")         → <img src="cat.png" alt="Cat">
 ```
 
 ### Multiple Children
@@ -31,11 +31,11 @@ nav(ul(li("Home"), li("About")))       → <nav><ul><li>Home</li><li>About</li><
 ### Property Types
 
 ```matra
-input({
-  type: "checkbox",                     // string
-  checked: true,                        // boolean
-  tabindex: 1                           // number
-})
+input(
+  type="checkbox",                     // string
+  checked=true,                         // boolean
+  tabindex=1                            // number
+)
 ```
 
 ## Block Syntax (v0.7, still supported)

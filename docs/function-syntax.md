@@ -18,9 +18,10 @@ div.container {
 ### Function Syntax (v0.8)
 
 ```matra
-div({class:"container"},
-  h1({id:"title"}, "Hello, World!"),
-  p("Welcome to Matra")
+div(
+  h1("Hello, World!", id="title"),
+  p("Welcome to Matra"),
+  class="container"
 )
 ```
 
@@ -45,10 +46,11 @@ Output: `<p>Hello, World!</p>`
 
 ### Element with Properties
 
-The first argument can be an object literal containing properties:
+Write properties as Python-style keyword arguments. Positional children are
+conventionally written first:
 
 ```matra
-h1({class:"title", id:"main"}, "Welcome")
+h1("Welcome", class="title", id="main")
 ```
 
 Output: `<h1 class="title" id="main">Welcome</h1>`
@@ -68,7 +70,7 @@ Output: `<div><p>First</p><p>Second</p><p>Third</p></div>`
 Function calls can be nested:
 
 ```matra
-nav(ul(li(a({href:"/"}, "Home")), li(a({href:"/about"}, "About"))))
+nav(ul(li(a("Home", href="/")), li(a("About", href="/about"))))
 ```
 
 ### Property Types
@@ -76,7 +78,7 @@ nav(ul(li(a({href:"/"}, "Home")), li(a({href:"/about"}, "About"))))
 Properties support strings, numbers, and booleans:
 
 ```matra
-input({type:"checkbox", checked:true, tabindex:1})
+input(type="checkbox", checked=true, tabindex=1)
 ```
 
 Output: `<input type="checkbox" checked tabindex="1">`
@@ -94,7 +96,7 @@ Output: `<div></div>`
 ### Self-Closing Elements
 
 ```matra
-img({src:"logo.png", alt:"Logo"})
+img(src="logo.png", alt="Logo")
 ```
 
 Output: `<img src="logo.png" alt="Logo">`
@@ -120,13 +122,13 @@ Use directives like `m-if` and `m-each` as properties:
 
 ```javascript
 // m-if directive
-const html = compile('p({"m-if":"show"}, "Conditional")', {
+const html = compile('p("Conditional", m-if="show")', {
   context: { show: true },
 })
 // Output: <p>Conditional</p>
 
 // m-each directive
-const html = compile('ul(li({"m-each":"items", "m-as":"item"}, "{{item}}"))', {
+const html = compile('ul(li("{{item}}", m-each="items", m-as="item"))', {
   context: { items: ["A", "B", "C"] },
 })
 // Output: <ul><li>A</li><li>B</li><li>C</li></ul>

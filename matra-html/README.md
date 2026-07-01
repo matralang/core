@@ -8,5 +8,5 @@ HTML semantics for the domain-neutral Matra AST.
 import { parse } from "@butchi/matra-core"
 import { toHTML } from "@butchi/matra-html"
 
-toHTML(parse('p({class:"lead"}, "Hello")'))
+toHTML(parse('p("Hello", class="lead")'))
 ```

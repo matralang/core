@@ -9,7 +9,7 @@ import { parse, parseWith } from "./parse.js";
 import { astToMatraJSON, matraJSONToAST } from "./convert.js";
 import { printJSON } from "./printer.js";
 import { transform, visit } from "./transform.js";
-export declare const VERSION = "0.1.0";
+export declare const VERSION = "0.1.1";
 declare const _default: {
     parse: typeof parse;
     parseWith: typeof parseWith;

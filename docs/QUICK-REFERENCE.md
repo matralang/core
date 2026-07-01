@@ -170,7 +170,7 @@ a.link[href="/" target="_blank"] { "Click" }
 ## API Usage
 
 ```javascript
-import { parse, compile } from "@butchi/matra-core"
+import { parse, compile } from "@matralang/core"
 
 // Parse function syntax
 const ast = parse('p("Hello")')

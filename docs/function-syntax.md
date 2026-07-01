@@ -108,7 +108,7 @@ Output: `<img src="logo.png" alt="Logo">`
 Function syntax works seamlessly with `{{variable}}` interpolation:
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 const html = compile('div(h1("{{title}}"), p("{{content}}"))', {
   context: { title: "Hello", content: "World" },

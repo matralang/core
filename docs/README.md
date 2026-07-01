@@ -1,6 +1,6 @@
 # Matra Documentation
 
-Welcome to the @butchi/matra-core documentation!
+Welcome to the @matralang/core documentation!
 
 ## Table of Contents
 
@@ -48,20 +48,20 @@ Welcome to the @butchi/matra-core documentation!
 - [Main README](../README.md)
 - [CHANGELOG](../CHANGELOG.md)
 - [GitHub Repository](https://github.com/butchi/matra-core)
-- [npm Package](https://www.npmjs.com/package/@butchi/matra-core)
+- [npm Package](https://www.npmjs.com/package/@matralang/core)
 
 ## Quick Start
 
 Install:
 
 ```bash
-npm install @butchi/matra-core
+npm install @matralang/core
 ```
 
 Basic usage:
 
 ```javascript
-import { compile } from '@butchi/matra-core';
+import { compile } from '@matralang/core';
 
 const template = `
   div {

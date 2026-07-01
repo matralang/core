@@ -104,7 +104,7 @@ div.container {
 Backtick syntax supports mustache interpolation:
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 const html = compile("h1`Hello, {{name}}!`", {
   context: { name: "World" },

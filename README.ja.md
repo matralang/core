@@ -25,7 +25,7 @@ Parserやプロセス間の交換形式にはMatraJSONを使用します。
 境界では明示的に変換します。
 
 ```ts
-import { astToMatraJSON, matraJSONToAST } from "@butchi/matra-core"
+import { astToMatraJSON, matraJSONToAST } from "@matralang/core"
 ```
 
 ## 交換可能なParser
@@ -33,7 +33,7 @@ import { astToMatraJSON, matraJSONToAST } from "@butchi/matra-core"
 Parserは`parse(source, options?)`メソッドを実装し、ASTまたはMatraJSONを返します。`parseWith()`は、どちらの出力もASTへ正規化します。
 
 ```ts
-import { parseWith } from "@butchi/matra-core"
+import { parseWith } from "@matralang/core"
 
 const ast = parseWith(peggyParser, source)
 ```
@@ -45,8 +45,8 @@ const ast = parseWith(peggyParser, source)
 HTMLレンダリングは、独立したworkspaceパッケージから提供します。
 
 ```ts
-import { parse } from "@butchi/matra-core"
-import { toHTML } from "@butchi/matra-html"
+import { parse } from "@matralang/core"
+import { toHTML } from "@matralang/matra-html"
 
 toHTML(parse('p("Hello", class="lead")'))
 ```

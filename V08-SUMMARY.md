@@ -87,7 +87,7 @@ Total: 60/60 passing ✅
 ### Simple
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 compile('p("Hello, World!")')
 // → <p>Hello, World!</p>

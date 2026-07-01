@@ -19,7 +19,7 @@ Matra offers three syntax modes:
 Pass the `mode` option to `compile()` or `matra()`:
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 // Document mode: Only Pug-style syntax
 const html = compile(
@@ -195,7 +195,7 @@ compile('div({"m-if":"show"}, "Content")', {
 ### Case 1: Static Site Generator (Document Mode)
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 function renderBlogPost(post) {
   return compile(
@@ -230,7 +230,7 @@ function renderBlogPost(post) {
 ### Case 2: Component Library (Application Mode)
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 function Button({ variant, onClick, children }) {
   return compile(
@@ -280,7 +280,7 @@ function Card({ title, description, link }) {
 ### Case 3: Flexible Framework (Mixed Mode)
 
 ```javascript
-import { compile } from "@butchi/matra-core"
+import { compile } from "@matralang/core"
 
 // Allow both syntaxes for maximum flexibility
 function render(template, data) {
@@ -322,7 +322,7 @@ compile('div.container { p { "Hello" } }', { mode: "document" })
 
 ```javascript
 // Wrap your compile function to enforce a mode
-import { compile as matraCompile } from "@butchi/matra-core"
+import { compile as matraCompile } from "@matralang/core"
 
 export function compile(source, opts = {}) {
   return matraCompile(source, {

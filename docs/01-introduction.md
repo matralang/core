@@ -34,7 +34,7 @@ Pure ESM module with no external dependencies. Perfect for:
 ### Static Site Generation
 
 ```javascript
-import { compile } from '@butchi/matra-core'
+import { compile } from '@matralang/core'
 
 const pages = posts.map(post => {
   return compile('article { h1 { "{{title}}" } {{content}} }', {
@@ -46,7 +46,7 @@ const pages = posts.map(post => {
 ### Component Libraries
 
 ```javascript
-import { with_ } from '@butchi/matra-core'
+import { with_ } from '@matralang/core'
 
 export const Card = with_(`
   div.card {
@@ -132,13 +132,13 @@ Matra compiles to an Abstract Syntax Tree (AST), making it:
 Install:
 
 ```bash
-npm install @butchi/matra-core
+npm install @matralang/core
 ```
 
 Your first template:
 
 ```javascript
-import { compile } from '@butchi/matra-core'
+import { compile } from '@matralang/core'
 
 const html = compile('div { "Hello, World!" }')
 console.log(html)

@@ -28,7 +28,7 @@ The parser/process interchange representation is MatraJSON:
 Convert explicitly at the boundary:
 
 ```ts
-import { astToMatraJSON, matraJSONToAST } from "@butchi/matra-core"
+import { astToMatraJSON, matraJSONToAST } from "@matralang/core"
 ```
 
 ## Replaceable parsers
@@ -37,7 +37,7 @@ A parser only needs a `parse(source, options?)` method and may return either
 AST or MatraJSON. `parseWith()` normalizes both forms to AST.
 
 ```ts
-import { parseWith } from "@butchi/matra-core"
+import { parseWith } from "@matralang/core"
 
 const ast = parseWith(peggyParser, source)
 ```
@@ -50,8 +50,8 @@ adapter, not part of the data model.
 HTML rendering is provided by the separate workspace package:
 
 ```ts
-import { parse } from "@butchi/matra-core"
-import { toHTML } from "@butchi/matra-html"
+import { parse } from "@matralang/core"
+import { toHTML } from "@matralang/matra-html"
 
 toHTML(parse('p("Hello", class="lead")'))
 ```

@@ -1,6 +1,6 @@
 # API Reference
 
-Complete API documentation for @butchi/matra-core.
+Complete API documentation for @matralang/core.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ Complete API documentation for @butchi/matra-core.
 Parses a Matra template string into an Abstract Syntax Tree (AST).
 
 ```javascript
-import { parse } from '@butchi/matra-core';
+import { parse } from '@matralang/core';
 
 const ast = parse(template);
 ```
@@ -67,7 +67,7 @@ try {
 Compiles a Matra template into a function that can be called with context data.
 
 ```javascript
-import { compile } from '@butchi/matra-core';
+import { compile } from '@matralang/core';
 
 const renderFn = compile(template, options);
 const html = renderFn(context);
@@ -120,7 +120,7 @@ const html = render({ name: 'Alice' });
 Transforms a parsed AST into a HAST (Hypertext Abstract Syntax Tree) by evaluating directives and interpolations.
 
 ```javascript
-import { parse, transform } from '@butchi/matra-core';
+import { parse, transform } from '@matralang/core';
 
 const ast = parse(template);
 const hast = transform(ast, context);
@@ -159,7 +159,7 @@ console.log(JSON.stringify(hast, null, 2));
 Creates a curried render function with pre-bound context.
 
 ```javascript
-import { with_ } from '@butchi/matra-core';
+import { with_ } from '@matralang/core';
 
 const render = with_(context);
 const html = render(template);
@@ -211,7 +211,7 @@ console.log(html);
 Converts a HAST or Matrast tree into an HTML string.
 
 ```javascript
-import { parse, transform, toHTML } from '@butchi/matra-core';
+import { parse, transform, toHTML } from '@matralang/core';
 
 const ast = parse(template);
 const hast = transform(ast, context);
@@ -251,7 +251,7 @@ console.log(html); // <div>Hello</div>
 Converts a HAST tree into a JSON string.
 
 ```javascript
-import { parse, transform, toJSON } from '@butchi/matra-core';
+import { parse, transform, toJSON } from '@matralang/core';
 
 const ast = parse(template);
 const hast = transform(ast, context);

@@ -1,6 +1,6 @@
 # Examples
 
-Real-world examples demonstrating @butchi/matra-core usage.
+Real-world examples demonstrating @matralang/core usage.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ Real-world examples demonstrating @butchi/matra-core usage.
 A reusable blog post card component:
 
 ```javascript
-import { compile } from '@butchi/matra-core';
+import { compile } from '@matralang/core';
 
 const template = `
   article[class="post-card"] {

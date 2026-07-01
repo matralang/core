@@ -8,6 +8,15 @@ import type {
 
 export function isMatraAST(value: unknown): value is MatraAST {
   return (
+    isRecord(value) &&
+    typeof value.tag === "string" &&
+    isRecord(value.props) &&
+    Array.isArray(value.children)
+  )
+}
+
+export function isMatraJSON(value: unknown): value is MatraJSON {
+  return (
     Array.isArray(value) &&
     value.length === 3 &&
     typeof value[0] === "string" &&
@@ -16,32 +25,23 @@ export function isMatraAST(value: unknown): value is MatraAST {
   )
 }
 
-export function isMatraJSON(value: unknown): value is MatraJSON {
-  return (
-    isRecord(value) &&
-    typeof value.tag === "string" &&
-    isRecord(value.props) &&
-    Array.isArray(value.children)
-  )
+/** Convert the object-shaped AST to compact MatraJSON. */
+export function astToMatraJSON(ast: MatraAST): MatraJSON {
+  return [
+    ast.tag,
+    cloneValue(ast.props),
+    ast.children.map(childToJSON),
+  ]
 }
 
-/** Convert the compact internal AST to the object-shaped interchange form. */
-export function astToMatraJSON(ast: MatraAST): MatraJSON {
-  const [tag, props, children] = ast
+/** Convert compact MatraJSON to the object-shaped AST. */
+export function matraJSONToAST(node: MatraJSON): MatraAST {
+  const [tag, props, children] = node
   return {
     tag,
     props: cloneValue(props),
-    children: children.map(childToJSON),
+    children: children.map(childToAST),
   }
-}
-
-/** Convert the object-shaped interchange form to the compact internal AST. */
-export function matraJSONToAST(node: MatraJSON): MatraAST {
-  return [
-    node.tag,
-    cloneValue(node.props),
-    node.children.map(childToAST),
-  ]
 }
 
 function childToJSON(child: MatraASTChild): MatraJSONChild {

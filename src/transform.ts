@@ -24,7 +24,7 @@ function walk(
   visitor: Visitor,
 ): void {
   visitor(node, { parent, index })
-  node[2].forEach((child, childIndex) => {
+  node.children.forEach((child, childIndex) => {
     if (isMatraAST(child)) walk(child, node, childIndex, visitor)
   })
 }
@@ -40,14 +40,14 @@ function transformNode(
   index: number | null,
   transformer: Transformer,
 ): MatraAST | null {
-  const children = node[2]
+  const children = node.children
     .map((child, childIndex): MatraASTChild | null =>
       isMatraAST(child)
         ? transformNode(child, node, childIndex, transformer)
         : child,
     )
     .filter((child): child is MatraASTChild => child !== null)
-  const next: MatraAST = [node[0], { ...node[1] }, children]
+  const next: MatraAST = { tag: node.tag, props: { ...node.props }, children }
   const result = transformer(next, { parent, index })
   return result === undefined ? next : result
 }

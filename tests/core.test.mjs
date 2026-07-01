@@ -10,61 +10,73 @@ import {
 } from "../dist/index.js"
 
 describe("domain-neutral Matra Core", () => {
-  it("parses to compact AST", () => {
-    assert.deepEqual(parse('sum(value("a"), 2, axis="x")'), [
-      "sum",
-      { axis: "x" },
-      [["value", {}, ["a"]], 2],
-    ])
+  it("parses MatraJSON into an object-shaped AST", () => {
+    assert.deepEqual(parse('sum(value("a"), 2, axis="x")'), {
+      tag: "sum",
+      props: { axis: "x" },
+      children: [{ tag: "value", props: {}, children: ["a"] }, 2],
+    })
   })
 
   it("parses Python-style keyword props", () => {
-    assert.deepEqual(parse("circle(x=10, y=20, r=5)"), [
-      "circle",
-      { x: 10, y: 20, r: 5 },
-      [],
-    ])
+    assert.deepEqual(parse("circle(x=10, y=20, r=5)"), {
+      tag: "circle",
+      props: { x: 10, y: 20, r: 5 },
+      children: [],
+    })
   })
 
   it("keeps object-style props as a compatibility syntax", () => {
-    assert.deepEqual(parse('circle({x:10}, "label")'), [
-      "circle",
-      { x: 10 },
-      ["label"],
-    ])
+    assert.deepEqual(parse('circle({x:10}, "label")'), {
+      tag: "circle",
+      props: { x: 10 },
+      children: ["label"],
+    })
   })
 
   it("round-trips AST and MatraJSON recursively", () => {
-    const ast = ["group", { kind: "math" }, [["add", {}, [1, 2]], "tail"]]
-    const json = {
+    const ast = {
       tag: "group",
       props: { kind: "math" },
-      children: [
-        { tag: "add", props: {}, children: [1, 2] },
-        "tail",
-      ],
+      children: [{ tag: "add", props: {}, children: [1, 2] }, "tail"],
     }
+    const json = ["group", { kind: "math" }, [["add", {}, [1, 2]], "tail"]]
     assert.deepEqual(astToMatraJSON(ast), json)
     assert.deepEqual(matraJSONToAST(json), ast)
   })
 
   it("normalizes a replaceable parser's MatraJSON output", () => {
     const parser = {
-      parse: () => ({ tag: "doc", props: {}, children: ["Hello"] }),
+      parse: () => ["doc", {}, ["Hello"]],
     }
-    assert.deepEqual(parseWith(parser, "ignored"), ["doc", {}, ["Hello"]])
+    assert.deepEqual(parseWith(parser, "ignored"), {
+      tag: "doc",
+      props: {},
+      children: ["Hello"],
+    })
   })
 
   it("visits and immutably transforms only AST children", () => {
-    const ast = ["doc", {}, [["p", {}, ["Hello"]], "literal"]]
+    const ast = {
+      tag: "doc",
+      props: {},
+      children: [{ tag: "p", props: {}, children: ["Hello"] }, "literal"],
+    }
     const tags = []
-    visit(ast, node => tags.push(node[0]))
+    visit(ast, node => tags.push(node.tag))
     assert.deepEqual(tags, ["doc", "p"])
 
     const changed = transform(ast, node =>
-      node[0] === "p" ? ["paragraph", node[1], node[2]] : undefined,
+      node.tag === "p" ? { ...node, tag: "paragraph" } : undefined,
     )
-    assert.deepEqual(changed, ["doc", {}, [["paragraph", {}, ["Hello"]], "literal"]])
-    assert.equal(ast[2][0][0], "p")
+    assert.deepEqual(changed, {
+      tag: "doc",
+      props: {},
+      children: [
+        { tag: "paragraph", props: {}, children: ["Hello"] },
+        "literal",
+      ],
+    })
+    assert.equal(ast.children[0].tag, "p")
   })
 })

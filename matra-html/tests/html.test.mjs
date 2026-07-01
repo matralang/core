@@ -8,10 +8,14 @@ const { toHTML } = htmlSource
 
 describe("@matralang/matra-html", () => {
   it("renders AST using HTML semantics", () => {
-    const ast = ["div", { class: "card", hidden: true }, [
-      ["p", {}, ["<Hello>"]],
-      ["br", {}, []],
-    ]]
+    const ast = {
+      tag: "div",
+      props: { class: "card", hidden: true },
+      children: [
+        { tag: "p", props: {}, children: ["<Hello>"] },
+        { tag: "br", props: {}, children: [] },
+      ],
+    }
     assert.equal(
       toHTML(ast),
       '<div class="card" hidden><p>&lt;Hello&gt;</p><br></div>',

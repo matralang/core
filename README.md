@@ -9,13 +9,14 @@ domain-specific evaluation live outside Core.
 
 ## Two tree representations
 
-The compact internal AST is a tuple:
+MatraJSON is the compact three-element representation emitted by parsers and
+used for interchange:
 
 ```ts
 ["tag", { role: "example" }, ["text", ["child", {}, []]]]
 ```
 
-The parser/process interchange representation is MatraJSON:
+The AST used by Core visitors, transformers, and renderers is object-shaped:
 
 ```ts
 {
@@ -42,8 +43,8 @@ import { parseWith } from "@matralang/core"
 const ast = parseWith(peggyParser, source)
 ```
 
-The currently bundled Peggy parser returns AST directly. It is a default
-adapter, not part of the data model.
+The bundled Peggy implementation emits MatraJSON. Core's public `parse()`
+adapts that output to AST, keeping the parser replaceable.
 
 ## HTML
 

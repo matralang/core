@@ -150,4 +150,4 @@
 // Exports
 // ============================================================================
 
-export const MATRA_VERSION = '0.6.0'
+export const MATRA_VERSION = '0.8.1'

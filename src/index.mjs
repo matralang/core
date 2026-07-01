@@ -78,7 +78,7 @@ export function with_(context) {
  *   - 'mixed': Both Block and Function syntax (default)
  *   - 'document': Block syntax only (Pug-style)
  *   - 'application': Function syntax only (JSX-style)
- * @returns {string|Object|Array} Rendered output in specified format
+ * @returns {string|Object|Array<unknown>} Rendered output in specified format
  */
 export function matra(input, options = {}) {
   const output = options.output ?? "html"

@@ -6,11 +6,6 @@
 import { evaluateSource } from "./evaluate.mjs"
 
 /**
- * HTML出力
- * @param {any} node
- * @returns {string}
- */
-/**
  * Render HAST/MDAST-style node {type, tagName, properties, children}
  * @param {Object} node
  * @returns {string}
@@ -59,7 +54,12 @@ function renderHastNode(node) {
   return ""
 }
 
-export function toHTML(node) {
+/**
+ * @param {any} node
+ * @param {{ minify?: boolean }} [_opts] Reserved for output formatting options
+ * @returns {string}
+ */
+export function toHTML(node, _opts = {}) {
   if (node == null) return ""
 
   // Handle arrays (AST is an array of entries)
@@ -72,12 +72,7 @@ export function toHTML(node) {
     return node.map(toHTML).join("")
   }
 
-    // Handle HAST/MDAST-style objects with type property
-  if (typeof node === "object" && node.type) {
-    return renderHastNode(node)
-  }
-
-    // Handle HAST/MDAST-style objects with type property
+  // Handle HAST/MDAST-style objects with type property
   if (typeof node === "object" && node.type) {
     return renderHastNode(node)
   }

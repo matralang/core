@@ -2,6 +2,10 @@
 
 このリポジトリは Matra monorepo に統合されました。
 
+https://github.com/matralang/matra
+
+npm パッケージは引き続き `@matra/*` scope で提供されます。
+
 ## Matra Core
 
 [English](./README.md) | [日本語](./README.ja.md)
